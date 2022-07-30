@@ -114,7 +114,7 @@ public static class Extensions
     /// <remarks>
     /// When determining if the <paramref name="item"/> is in the collection, the <see cref="StringComparer.OrdinalIgnoreCase"/> comparer is used.
     /// </remarks>
-    public static bool IsEmptyOrContains(this IEnumerable<string> first, string item)
+    public static bool IsEmptyOrContains(this IEnumerable<string>? first, string item)
     {
         return first.IsEmptyOrContains(item, StringComparer.OrdinalIgnoreCase);
     }
@@ -128,11 +128,11 @@ public static class Extensions
     /// <param name="second">The second collection</param>
     /// <param name="comparer">The compare to use when looking for common items</param>
     /// <returns><c>true</c> when the two collections are null or empty, or contain a common item; otherwise <c>false</c></returns>
-    public static bool IsEmptyOrIntersectionContainsAny<T>(this IEnumerable<T> first, IEnumerable<T> second, IEqualityComparer<T> comparer)
+    public static bool IsEmptyOrIntersectionContainsAny<T>(this IEnumerable<T>? first, IEnumerable<T>? second, IEqualityComparer<T> comparer)
     {
         if (first.IsNullOrEmpty())
         {
-            return second.IsNullOrEmpty();
+            return true;
         }
 
         if (second.IsNullOrEmpty())
@@ -140,11 +140,11 @@ public static class Extensions
             return first.IsNullOrEmpty();
         }
 
-        var firstEnumerator = first.GetEnumerator();
+        var firstEnumerator = first!.GetEnumerator();
 
         while (firstEnumerator.MoveNext())
         {
-            var secondEnumerator = second.GetEnumerator();
+            var secondEnumerator = second!.GetEnumerator();
 
             while (secondEnumerator.MoveNext())
             {
@@ -167,11 +167,11 @@ public static class Extensions
     /// <param name="second">The second collection</param>
     /// <param name="comparer">The compare to use when looking for common items</param>
     /// <returns><c>true</c> when the two collections are null or empty, or contain a common item; otherwise <c>false</c></returns>
-    public static bool IsEmptyOrIntersectionContainsAny<T>(this IEnumerable<T> first, IEnumerable<T> second) where T : IEquatable<T>
+    public static bool IsEmptyOrIntersectionContainsAny<T>(this IEnumerable<T>? first, IEnumerable<T>? second) where T : IEquatable<T>
     {
         if (first.IsNullOrEmpty())
         {
-            return second.IsNullOrEmpty();
+            return true;
         }
 
         if (second.IsNullOrEmpty())
@@ -179,11 +179,11 @@ public static class Extensions
             return first.IsNullOrEmpty();
         }
 
-        var firstEnumerator = first.GetEnumerator();
+        var firstEnumerator = first!.GetEnumerator();
 
         while (firstEnumerator.MoveNext())
         {
-            var secondEnumerator = second.GetEnumerator();
+            var secondEnumerator = second!.GetEnumerator();
 
             while (secondEnumerator.MoveNext())
             {
@@ -208,7 +208,7 @@ public static class Extensions
     /// When determining if the <paramref name="first"/> and <paramref name="second"/> parameters contain any common items,
     /// the <see cref="StringComparer.OrdinalIgnoreCase"/> comparer is used.
     /// </remarks>
-    public static bool IsEmptyOrIntersectionContainsAny(this IEnumerable<string> first, IEnumerable<string> second)
+    public static bool IsEmptyOrIntersectionContainsAny(this IEnumerable<string>? first, IEnumerable<string>? second)
     {
         return first.IsEmptyOrIntersectionContainsAny(second, StringComparer.OrdinalIgnoreCase);
     }
